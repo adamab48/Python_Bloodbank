@@ -1,4 +1,5 @@
-
+import imp
+from IPython.display import clear_output
 import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import date,timedelta
@@ -13,7 +14,7 @@ col = {"Name":[],"Age":[],"Gender":[],"Blood Type":[],"donation type":[],"date_i
 data = pd.DataFrame.from_dict(data=col)
 
 
-print(data)
+
 def add_date(n) :
     global current_date
     current_date += timedelta(days=n)
@@ -39,11 +40,12 @@ def add_donation() :
     new_entry["donation type"] = donationtypechoice[randint(0,2)]
     new_entry["valid_until"] = current_date + donationtype[new_entry["donation type"]]
     data = data.append(new_entry,ignore_index=True)
-while True :
+for i in range(1000):
     add_date(1)
     add_donation()        
     plt.bar(x = dict(data["Blood Type"].value_counts()).keys(),height= dict(data["Blood Type"].value_counts()).values(),color="black")
     plt.pause(0.001)
+#data.to_excel("result.xlsx")
 #add_date_prompt()
 
 
