@@ -1,19 +1,16 @@
-import imp
-from IPython.display import clear_output
+from traceback import print_tb
+from matplotlib import animation
 import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import date,timedelta
 import names
 from random import randint
-
 init_date = date.today()
 current_date = init_date
 bloodmatrix = pd.read_csv("/home/adam/Documents/CODE/Python_Projects/TPsem2proj/finalkekw.csv")
 bloodmatrix.set_index("recipient",inplace=True)
 col = {"Name":[],"Age":[],"Gender":[],"Blood Type":[],"donation type":[],"date_in":[],"valid_until":[]}
 data = pd.DataFrame.from_dict(data=col)
-
-
 
 def add_date(n) :
     global current_date
@@ -40,11 +37,36 @@ def add_donation() :
     new_entry["donation type"] = donationtypechoice[randint(0,2)]
     new_entry["valid_until"] = current_date + donationtype[new_entry["donation type"]]
     data = data.append(new_entry,ignore_index=True)
-for i in range(1000):
-    add_date(1)
-    add_donation()        
-    plt.bar(x = dict(data["Blood Type"].value_counts()).keys(),height= dict(data["Blood Type"].value_counts()).values(),color="black")
-    plt.pause(0.001)
+
+def describe() :
+    fig1 = plt.figure(figsize=(10,10))
+    a  = fig1.add_subplot(221)
+    a2 = fig1.add_subplot(222)
+    a3 = fig1.add_subplot(223)
+    a4 = fig1.add_subplot(224)
+    data["Gender"].value_counts().plot(kind="bar",ax=a)
+    data["Blood Type"].value_counts().plot(kind="bar",ax=a2)
+    data["donation type"].value_counts().plot(kind="bar",ax=a3)
+    data.groupby("Gender")["Age"].plot(kind="hist" ,ax=a4,alpha=0.8)
+    plt.show()
+def get_donation() :
+    while True :
+        getbldtype = input("What is your blood type ? ").upper()
+        if getbldtype in bloodmatrix.columns : break
+        else :
+            print("Please input a valid blood type")
+    s = bloodmatrix.loc[getbldtype]
+    print("Here are the blood types compatible with yours !")
+    for i in list(s[s==1].keys()) :
+        print(i,end=' ')
+    print(" ")
+    print(data[data["Blood Type"].isin(list(s[s==1].keys()))]["Blood Type"].value_counts())
+    print("We have ",data[data["Blood Type"].isin(list(s[s==1].keys()))]["Blood Type"].value_counts().sum()," available donors for your blood type")
+    
+for _ in range(50) :
+    add_donation()
+describe()
+get_donation()
 #data.to_excel("result.xlsx")
 #add_date_prompt()
 
