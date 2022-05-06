@@ -1,4 +1,4 @@
-from traceback import print_tb
+#!/usr/bin/env python3
 from matplotlib import animation
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -67,7 +67,7 @@ for _ in range(50) :
     add_donation()
 describe()
 get_donation()
-#data.to_excel("result.xlsx")
+#we can export our data with data.to_excel("result.xlsx")
 #add_date_prompt()
 
 

@@ -1,3 +1,11 @@
-# Python_Bloodbank
-This is a project where i used python to generate a random bloodbank database then visualize various stats about the database with the ability to simulate
-donations , blood type matching and an expiration date system 
+# Blood Bank Simulator
+* This project consists of a simple simulation of a Blood Bank Database.
+* Features Include :
+    * Adding Random Entries (add_donation method)
+    
+    * Simulating Days passing (for expiration date purpose) (add_date method)
+    
+    * Showing information about the current Database (Plots) (describe method)
+    
+    * Simulating getteing a donation based on the blood type of the user and showing compatible donors (get_donation method)
+    
